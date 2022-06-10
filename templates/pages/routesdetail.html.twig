@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="mt-4">
+        <h2 >Winkel route voor {{ storename }}</h2>
+        <form method="post" action="{{ path('update') }}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Naam</th>
+                <th scope="col">Volgorde</th>
+                <th scope="col">Verwijder</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for route in routes %}
+
+                    <tr>
+                        <td>{{ route.department.departmentName }}</td>
+                        <td> <input type="number" name="{{ route.routeId }}" value="{{ route.sortOrder }}" />
+                        <td> <button type="submit" id="{{route.routeId  }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
+
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+            <button type="submit" class="btn btn-primary m-2">Save</button>
+        </form>
+            <h3>Voeg een Afdeling toe</h3>
+        <form method="POST" action="{{ path('app_departments_new') }}">
+            <div class="form-group">
+                <label for="winkelnaam"></label>
+                <input type="text" class="form-control m-2" id="departmentname" name="departmentname" placeholder="Naam Afdeling">
+            </div>
+            <button type="submit" class="btn btn-primary m-2">Save</button>
+        </form>
+    </div>
+{% endblock %}
+
+ {% block javascripts %}
+     <script>
+     function Delete(id) {
+         window.location.href =  `https://wdev2.be/fs_thomass/eindwerk/route/${id}/delete`
+     }
+     </script>
+
+ {% endblock %}
