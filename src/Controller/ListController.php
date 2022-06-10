@@ -21,7 +21,7 @@ class ListController extends AbstractController
      * @throws Exception
      */
     public function updateList(ShoppinglistProductRepository $shoppinglistProductRepository){
-            //update checked or qty
+            //update checked of qty
 
         $contents = json_decode(file_get_contents("php://input"));
         $listproduct_array = [];
@@ -69,7 +69,7 @@ class ListController extends AbstractController
     public function deleteList( ShoppinglistRepository  $shoppinglistRepository , ShoppinglistProductRepository $shoppinglistProductRepository)
     {
 
-        //delete List and all products on that list.
+        //lijst en alle producten op die lijst verwijderen
 
         $contents = json_decode(file_get_contents("php://input"));
 
@@ -93,7 +93,7 @@ class ListController extends AbstractController
 
         }
 
-        // delete product from list
+        // lijst verwijderen
 
         if ( property_exists($contents, "shoppinglist_id") && property_exists($contents, "product_id")) {
 
@@ -120,7 +120,7 @@ class ListController extends AbstractController
      */
     public function newLists(ShoppinglistRepository $shoppinglistRepository , ShoppinglistProductRepository  $shoppinglistProductRepository){
 
-            // Make new List
+            // nieuwe lijst maken
 
             $contents = json_decode( file_get_contents("php://input") );
 
@@ -138,7 +138,7 @@ class ListController extends AbstractController
             if(property_exists($contents , "shoppinglist_id") && property_exists($contents , "product_id"))
             {
 
-                // Add new product on list
+                // Nieuw product aan lijst toevoegen.
 
                 $newlistproduct_array =[];
                 $newlistproduct = $shoppinglistProductRepository->setListProduct($contents->product_id , $contents->shoppinglist_id);

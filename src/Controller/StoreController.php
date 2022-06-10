@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Store;
+use App\Repository\RouteRepository;
 use App\Repository\StoreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,13 +16,19 @@ class StoreController extends AbstractController
     /**
      * @Route("/store/{id}/delete", name="delete")
      */
-    public function removeStore(Store $store , StoreRepository $StoreRepository , EntityManagerInterface $em)
+    public function removeStore(Store $store , StoreRepository $StoreRepository , EntityManagerInterface $em , RouteRepository $routeRepository)
     {
+
+       $route_exists =  $routeRepository->findBy(['store' => $store->getStoreId()]);
+        if($route_exists == []){
         //verwijder winkel
         $StoreRepository->remove($store , true);
 
         $this->addFlash('error' , 'Winkel verwijderd');
-
+        }
+        else{
+            $this->addFlash('error' , 'Deze winkel bevat routes verwijder eerst deze');
+        }
         return $this->addStores($em);
 
     }
@@ -54,7 +61,8 @@ class StoreController extends AbstractController
         $store->setStoreName($_POST['storename']);
         $store->setStoreImg($_FILES['storeimage']['name']);
 
-        $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
+       $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/fs_thomass/eindwerk/images/";
+        // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
 
         $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
 
