@@ -33,6 +33,23 @@ class StoreController extends AbstractController
 
     }
 
+
+    /**
+     * @Route("/pages/storedetail/{id}" , name="store_detail")
+     * @return Response
+     */
+    public function detailStores($id , EntityManagerInterface $em){
+
+
+
+        $repository = $em->getRepository(Store::class);
+        $stores =  $repository->findOneBy(['storeId' => $id]);
+
+
+        return $this->render("pages/storedetail.html.twig"  , ['Store' => $stores]);
+
+    }
+
     /**
      * @Route("/pages/addstores" , name="app_stores_addnew")
      * @return Response
@@ -47,7 +64,40 @@ class StoreController extends AbstractController
 
 
     }
+    /**
+     * @Route("/update/store", methods={"POST"}, name="app_stores_update")
+     * @return Response
+     */
+    public function updateStore(   EntityManagerInterface $em )
 
+    {
+        //Nieuwe winkel toevoegen
+        $store = new Store();
+        $store->setStoreName($_POST['storename']);
+        $store->setStoreStreet($_POST['storestreet']);
+        $store->setStoreNr($_POST['storenr']);
+        $store->setStorePostalcode($_POST['storepostalcode']);
+        $store->setStoreCity($_POST['storecity']);
+        $store->setStoreImg($_FILES['storeimage']['name']);
+
+
+        $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/fs_thomass/eindwerk/images/";
+        // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
+
+        $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
+
+
+        if (move_uploaded_file($_FILES['storeimage']['tmp_name'], $uploadfile)) {
+            $this->addFlash('succes' , 'Winkel toegevoegd');
+            $em->persist($store);
+            $em->flush();
+
+        } else {
+            $this->addFlash('error' , 'Vul alle velden correct in');
+        }
+
+        return $this->addStores($em);
+    }
 
     /**
      * @Route("/new/store", methods={"POST"}, name="app_stores_new")
