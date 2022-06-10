@@ -59,10 +59,15 @@ class StoreController extends AbstractController
         //Nieuwe winkel toevoegen
         $store = new Store();
         $store->setStoreName($_POST['storename']);
+        $store->setStoreStreet($_POST['storestreet']);
+        $store->setStoreNr($_POST['storenr']);
+        $store->setStorePostalcode($_POST['storepostalcode']);
+        $store->setStoreCity($_POST['storecity']);
         $store->setStoreImg($_FILES['storeimage']['name']);
 
+
        $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/fs_thomass/eindwerk/images/";
-        // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
+       // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
 
         $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
 

@@ -6,7 +6,7 @@
 
         <label for="stores">Kies een winkel</label>
         <form method="post" action="{{ path('app_routes_showdetailtwig') }}">
-        <select name="stores" id="stores">
+        <select class="form-select" name="stores" id="stores">
             {% for store in stores  %}
             <option value="{{ store.storeId  }}">  {{ store.storeName }}</option>
             {% endfor %}

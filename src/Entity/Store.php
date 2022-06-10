@@ -35,6 +35,26 @@ class Store
      */
     private $storeImg;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $store_street;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $store_nr;
+
+    /**
+     * @ORM\Column(type="string", length=35, nullable=true)
+     */
+    private $store_postalcode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $store_city;
+
     public function getStoreId(): ?int
     {
         return $this->storeId;
@@ -60,6 +80,54 @@ class Store
     public function setStoreImg(?string $storeImg): self
     {
         $this->storeImg = $storeImg;
+
+        return $this;
+    }
+
+    public function getStoreStreet(): ?string
+    {
+        return $this->store_street;
+    }
+
+    public function setStoreStreet(?string $store_street): self
+    {
+        $this->store_street = $store_street;
+
+        return $this;
+    }
+
+    public function getStoreNr(): ?string
+    {
+        return $this->store_nr;
+    }
+
+    public function setStoreNr(?string $store_nr): self
+    {
+        $this->store_nr = $store_nr;
+
+        return $this;
+    }
+
+    public function getStorePostalcode(): ?string
+    {
+        return $this->store_postalcode;
+    }
+
+    public function setStorePostalcode(?string $store_postalcode): self
+    {
+        $this->store_postalcode = $store_postalcode;
+
+        return $this;
+    }
+
+    public function getStoreCity(): ?string
+    {
+        return $this->store_city;
+    }
+
+    public function setStoreCity(?string $store_city): self
+    {
+        $this->store_city = $store_city;
 
         return $this;
     }

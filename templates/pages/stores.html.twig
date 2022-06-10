@@ -4,12 +4,12 @@
     <div class="mt-4">
     <h2 >Winkels</h2>
 
-        <table class="table">
+        <table class="table table-bordered" >
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Winkelnaam</th>
                 <th scope="col">Afbeelding</th>
+                <th scope="col">Wijzig</th>
                 <th scope="col">Verwijder</th>
             </tr>
             </thead>
@@ -17,10 +17,11 @@
             {% for store in Stores %}
 
                 <tr>
-                    <th scope="row">{{ store.storeId }}</th>
+
                     <td> {{ store.storeName }}</td>
                     <td><img src="{{ asset('images/' ~ store.storeImg) }}"/>  </td>
-                    <td> <button type="submit" id="{{store.storeId }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
+                    <td> <button  id="{{store.storeId }}" class="btn btn-primary m-2" onclick="Edit(this.id)" >Wijzig</button> </td>
+                    <td> <button  id="{{store.storeId }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
                 </tr>
 
             {% endfor %}
@@ -28,11 +29,19 @@
             </tbody>
         </table>
 
-        <h3>Voeg een Winkel toe</h3>
+        <h3 class="mt-4">Voeg een Winkel toe</h3>
     <form enctype="multipart/form-data" method="POST" action="{{ path('app_stores_new') }}">
         <div class="form-group">
             <label for="winkelnaam"></label>
             <input type="text" class="form-control m-2" id="storename" name="storename" placeholder="Naam Winkel">
+            <label for="Straat"></label>
+            <input type="text" class="form-control m-2" id="storestreet" name="storestreet" placeholder="Straat">
+            <label for="Nummer"></label>
+            <input type="text" class="form-control m-2" id="storenr" name="storenr" placeholder="Nummer">
+            <label for="Postcode"></label>
+            <input type="text" class="form-control m-2" id="storepostalcode" name="storepostalcode" placeholder="Postcode">
+            <label for="Stad"></label>
+            <input type="text" class="form-control m-2" id="storecity" name="storecity" placeholder="Stad">
             <label for="image"></label>
             <input type="file" class="form-control  m-2" id="storeimage" name="storeimage" />
         </div>
@@ -42,8 +51,12 @@
 {% endblock %}
  {% block javascripts %}
      <script>
+
+         function Edit(id) {
+
+         }
          function Delete(id) {
-             window.location.href =  `/store/${id}/delete`
+             window.location.href =  `https://wdev2.be/fs_thomass/eindwerk/store/${id}/delete`
          }
      </script>
 

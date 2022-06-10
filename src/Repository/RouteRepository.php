@@ -80,6 +80,19 @@ class RouteRepository extends ServiceEntityRepository
         $statement->executeQuery();
     }
 
+
+    /**
+     * @throws Exception
+     */
+    public function sortRoute($i , $key){
+
+        $sql = "UPDATE route SET sort_order=:i WHERE route_id= :key";
+        $statement =$this->getEntityManager()->getConnection()->prepare($sql);
+        $statement->bindParam('i' ,$i );
+        $statement->bindParam('key' , $key );
+        $statement->executeQuery();
+    }
+
 //    public function findOneBySomeField($value): ?Route
 //    {
 //        return $this->createQueryBuilder('r')

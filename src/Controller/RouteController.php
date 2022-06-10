@@ -51,12 +51,18 @@ class RouteController extends AbstractController
      * @Route("/pages/routes/update", name="update")
      * @throws Exception
      */
-    public function UpdateRoute(RouteRepository $routeRepository , StoreRepository $storeRepository ): Response
+    /**
+     * @Route("/pages/routes/update", name="update")
+     * @throws Exception
+     */
+    public function UpdateRoute(RouteRepository $routeRepository , StoreRepository $storeRepository  ): Response
     {
 
         $array = $_POST;
-        foreach ( $array as $key=>$val){
-            $routeRepository->UpdateRoute($key , $val);
+        $i = 1;
+        foreach ($array as $key => $value) {
+            $routeRepository->sortRoute($i ,$key);
+            $i++;
         }
 
         $routes = $routeRepository->ShopRoute($_SESSION['storeid']);

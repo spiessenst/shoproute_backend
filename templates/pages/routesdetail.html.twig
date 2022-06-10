@@ -4,29 +4,26 @@
     <div class="mt-4">
         <h2 >Winkel route voor {{ storename }}</h2>
         <form method="post" action="{{ path('update') }}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Naam</th>
-                <th scope="col">Volgorde</th>
-                <th scope="col">Verwijder</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for route in routes %}
-
+            <table class="table table-bordered" id="mytable">
+                <thead>
+                <tr>
+                    <th scope="col">Naam</th>
+                    <th scope="col">Verwijder</th>
+                </tr>
+                </thead>
+                <tbody class="row_position">
+                {% for route in routes %}
                     <tr>
-                        <td>{{ route.department.departmentName }}</td>
-                        <td> <input type="number" name="{{ route.routeId }}" value="{{ route.sortOrder }}" />
-                        <td> <button type="submit" id="{{route.routeId  }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
-
+                        <td>{{ route.department.departmentName }} <input type="hidden" name="{{ route.routeId }}" value="{{ route.sortOrder }}"></td>
+                        <td> <button type="submit" id="{{route.routeId }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
                     </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                {% endfor %}
+                </tbody>
+            </table>
             <button type="submit" class="btn btn-primary m-2">Save</button>
         </form>
-            <h3>Voeg een Afdeling toe</h3>
+
+        <h3 class="mt-4">Voeg een Afdeling toe</h3>
         <form method="POST" action="{{ path('app_departments_new') }}">
             <div class="form-group">
                 <label for="winkelnaam"></label>
@@ -35,13 +32,25 @@
             <button type="submit" class="btn btn-primary m-2">Save</button>
         </form>
     </div>
+
+
+    <script type="text/javascript">
+
+        function Delete(id) {
+
+            window.location.href =  `https://wdev2.be/fs_thomass/eindwerk/route/${id}/delete`
+        }
+
+        $(".row_position").sortable({
+            delay: 150,
+
+        })
+
+
+    </script>
 {% endblock %}
 
  {% block javascripts %}
-     <script>
-     function Delete(id) {
-         window.location.href =  `https://wdev2.be/fs_thomass/eindwerk/route/${id}/delete`
-     }
-     </script>
+
 
  {% endblock %}
