@@ -88,13 +88,8 @@ class StoreController extends AbstractController
         $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
 
 
-        if (move_uploaded_file($_FILES['storeimage']['tmp_name'], $uploadfile)) {
+        move_uploaded_file($_FILES['storeimage']['tmp_name'], $uploadfile) ;
             $this->addFlash('succes' , 'Winkel aangepast');
-
-
-        } else {
-            $this->addFlash('error' , 'Vul alle velden correct in');
-        }
 
         return $this->addStores($em);
     }
