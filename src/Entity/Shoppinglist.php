@@ -40,6 +40,11 @@ class Shoppinglist
         return $this->shoppinglistId;
     }
 
+    public function getShoppinglistIdString(): string
+    {
+        return strval($this->shoppinglistId);
+    }
+
     public function getShoppinglistCreateDate(): ?\DateTimeInterface
     {
         return $this->shoppinglistCreateDate;
