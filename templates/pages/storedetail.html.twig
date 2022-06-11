@@ -4,14 +4,12 @@
     <div class="col-4 mt-4">
         <h2 >Winkel Detail</h2>
 
-        {{ Store.storeId  }}
-
-
         <h3 class="mt-4">Wijzig Winkel</h3>
         <form enctype="multipart/form-data" method="POST" action="{{ path('app_stores_update') }}">
             <div class="form-group">
+                <input type="hidden" class="form-control m-2" id="storeid" name="storeid" value="{{ Store.storeId  }}">
                 <label for="winkelnaam"></label>
-                <input type="text" class="form-control m-2" id="storename" name="storename" value=" {{ Store.storeName  }}">
+                <input type="text" class="form-control m-2" id="storename" name="storename" value="{{ Store.storeName  }}">
                 <label for="Straat"></label>
                 <input type="text" class="form-control m-2" id="storestreet" name="storestreet" value="{{ Store.storeStreet  }}">
                 <label for="Nummer"></label>

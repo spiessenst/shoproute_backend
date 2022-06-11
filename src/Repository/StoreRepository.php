@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Store;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -53,6 +54,25 @@ class StoreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+   }
+
+    /**
+     * @throws Exception
+     */
+    public function UpdateStore($storeId , $storeName , $storeImg , $storeStreet , $storeNr , $StorePostalcode , $storeCity  ){
+
+       $sql= "UPDATE store SET store_name= :storename , store_img = :storeimg , store_street= :storestreet , store_nr= :storenr  , store_postalcode= :storepostal , store_city= :storecity WHERE store_id = :store_id";
+       $statement = $this->getEntityManager()->getConnection()->prepare($sql);
+
+
+       $statement->bindParam('storename' ,$storeName );
+        $statement->bindParam('storeimg' ,$storeImg );
+       $statement->bindParam('storestreet' ,$storeStreet );
+       $statement->bindParam('storenr' ,$storeNr );
+       $statement->bindParam('storepostal' ,$StorePostalcode );
+       $statement->bindParam('storecity' ,$storeCity );
+       $statement->bindParam('store_id' ,$storeId );
+       $statement->executeQuery();
    }
 
 

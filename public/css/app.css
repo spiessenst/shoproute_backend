@@ -3,18 +3,14 @@
 body {
     background-color: white;
 
-
 }
 
-h1 , h2 , h3{
-
-    color: darkgray;
+.movable{
+    cursor:grab;
 }
 
-#mytable{
-
+.movable:active{
     cursor:grabbing;
-
 }
 
 

@@ -13,7 +13,7 @@
                 </thead>
                 <tbody class="row_position">
                 {% for route in routes %}
-                    <tr>
+                    <tr class="movable">
                         <td>{{ route.department.departmentName }} <input type="hidden" name="{{ route.routeId }}" value="{{ route.sortOrder }}"></td>
                         <td> <button type="submit" id="{{route.routeId }}" class="btn btn-danger m-2" onclick="Delete(this.id)" >Delete</button> </td>
                     </tr>

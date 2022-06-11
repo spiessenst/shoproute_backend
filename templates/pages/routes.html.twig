@@ -4,7 +4,7 @@
     <div class="col-4 mt-4">
         <h2 >Winkel route</h2>
 
-        <label for="stores">Kies een winkel</label>
+        <label class="mb-2" for="stores">Kies een winkel</label>
         <form method="post" action="{{ path('app_routes_showdetailtwig') }}">
         <select class="form-select" name="stores" id="stores">
             {% for store in stores  %}

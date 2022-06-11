@@ -68,29 +68,23 @@ class StoreController extends AbstractController
      * @Route("/update/store", methods={"POST"}, name="app_stores_update")
      * @return Response
      */
-    public function updateStore(   EntityManagerInterface $em )
+    public function updateStore(  StoreRepository $storeRepository , EntityManagerInterface $em )
 
     {
-        //Nieuwe winkel toevoegen
-        $store = new Store();
-        $store->setStoreName($_POST['storename']);
-        $store->setStoreStreet($_POST['storestreet']);
-        $store->setStoreNr($_POST['storenr']);
-        $store->setStorePostalcode($_POST['storepostalcode']);
-        $store->setStoreCity($_POST['storecity']);
-        $store->setStoreImg($_FILES['storeimage']['name']);
+
+        $storeRepository->UpdateStore($_POST['storeid'] , $_POST['storename'] , $_FILES['storeimage']['name'] ,
+            $_POST['storestreet'] , $_POST['storenr'] , $_POST['storepostalcode'] ,$_POST['storecity']);
 
 
         $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/fs_thomass/eindwerk/images/";
-        // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
+        //$uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
 
         $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
 
 
         if (move_uploaded_file($_FILES['storeimage']['tmp_name'], $uploadfile)) {
-            $this->addFlash('succes' , 'Winkel toegevoegd');
-            $em->persist($store);
-            $em->flush();
+            $this->addFlash('succes' , 'Winkel aangepast');
+
 
         } else {
             $this->addFlash('error' , 'Vul alle velden correct in');
@@ -117,7 +111,7 @@ class StoreController extends AbstractController
 
 
        $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/fs_thomass/eindwerk/images/";
-       // $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
+      //  $uploaddir = $_SERVER['DOCUMENT_ROOT']. "/images/";
 
         $uploadfile = $uploaddir . basename($_FILES['storeimage']['name']);
 
