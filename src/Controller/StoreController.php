@@ -71,6 +71,12 @@ class StoreController extends AbstractController
     public function updateStore(  StoreRepository $storeRepository , EntityManagerInterface $em )
 
     {
+        $Store = $storeRepository->findOneBy(['storeId' => $_POST['storeid']]);
+        $old_img = $Store->getStoreImg();
+
+        if($_FILES['storeimage']['name'] == ""){
+            $_FILES['storeimage']['name'] = $old_img;
+        }
 
         $storeRepository->UpdateStore($_POST['storeid'] , $_POST['storename'] , $_FILES['storeimage']['name'] ,
             $_POST['storestreet'] , $_POST['storenr'] , $_POST['storepostalcode'] ,$_POST['storecity']);
