@@ -65,10 +65,9 @@ order by r.sort_order;";
    /**
     * @return Shoppinglist[] Returns an array of Shoppinglist objects
      */
-   public function allStoresByDate(): array
+   public function  allListsByDate(): array
    {
        return $this->createQueryBuilder('s')
-
             ->orderBy('s.shoppinglistCreateDate', 'DESC')
             ->setMaxResults(10)
             ->getQuery()

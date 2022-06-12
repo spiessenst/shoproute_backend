@@ -164,13 +164,15 @@ class ListController extends AbstractController
 
         // Toon alle lijsten in json
         $lists_array = [];
-        $lists = $shoppinglistRepository->allStoresByDate();
+        $lists = $shoppinglistRepository->allListsByDate();
 
         if ( !$lists){
             throw $this->createNotFoundException("No Lists Found");
         }
         foreach ( $lists as $list){
-            $lists_array[] = ['shoppinglist_id'=>$list->getShoppinglistId() ,
+            $lists_array[] = [
+
+                'shoppinglist_id'=>$list->getShoppinglistId() ,
                 'shoppinglist_create_date'=>$list->getShoppinglistCreateDateString() ,
                 'shoppinglist_name'=>$list->getShoppinglistName()];
         }
