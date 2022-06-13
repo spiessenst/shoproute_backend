@@ -84,7 +84,7 @@ class ListController extends AbstractController
             }
 
             foreach ($lists as $list) {
-                $lists_array[] = ['shopppinglist_id' => $list->getShoppinglistId(),
+                $lists_array[] = ['shoppinglist_id' => $list->getShoppinglistId(),
                     'shoppinglist_create_date' => $list->getShoppinglistCreateDateString(),
                     'shoppinglist_name' => $list->getShoppinglistName()];
             }
