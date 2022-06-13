@@ -58,7 +58,6 @@ class ShoppinglistProductRepository extends ServiceEntityRepository
 
         $statement->executeQuery();
 
-
         return $this->findAll() ;
     }
 

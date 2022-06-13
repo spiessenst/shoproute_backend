@@ -130,9 +130,9 @@ class ListController extends AbstractController
                 $newListName = $contents->shoppinglist_name;
                 $newList = $shoppinglistRepository->setList($newListName);
 
-                return $this->json(['shopppinglist_id' => $newList->getShoppinglistId() ,
+                return $this->json(['shoppinglist_id' => $newList->getShoppinglistId() ,
                                     'shoppinglist_create_date'=> $newList->getShoppinglistCreateDateString() ,
-                                    'shopppinglist_name' => $newList->getShoppinglistName() ]);
+                                    'shoppinglist_name' => $newList->getShoppinglistName() ]);
             }
 
             if(property_exists($contents , "shoppinglist_id") && property_exists($contents , "product_id"))
