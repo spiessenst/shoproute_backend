@@ -88,7 +88,7 @@ class ListController extends AbstractController
 
 
             if (!$lists) {
-                throw $this->createNotFoundException("Error");
+                return $this->json($lists_array);
             }
 
             foreach ($lists as $list) {
