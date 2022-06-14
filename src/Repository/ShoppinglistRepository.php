@@ -43,6 +43,18 @@ class ShoppinglistRepository extends ServiceEntityRepository
     }
 
 
+    public function giveListforAllStores($shoppinglistid) :array {
+
+        $sql = "SELECT * FROM shoppinglist_product where shoppinglist_id = :shoppingid";
+
+        $statement = $this->getEntityManager()->getConnection()->prepare($sql);
+        $statement->bindParam('shoppingid' ,$shoppinglistid );
+
+
+        return $statement->executeQuery()->fetchAllAssociative();
+
+    }
+
     public function giveListForStore($shoppinglistid  , $storeid  ) : array
     {
 
@@ -110,6 +122,23 @@ order by r.sort_order;";
         $statement->executeQuery();
 
         return $this->findAll() ;
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function updateListName($shoppinglist_id , $shoppinglist_name){
+
+        $sql = "UPDATE shoppinglist SET shoppinglist_name= :shoppinglist_name WHERE shoppinglist_id = :shoppinglist_id";
+
+        $statement = $this->getEntityManager()->getConnection()->prepare($sql);
+        $statement->bindParam('shoppinglist_id' ,$shoppinglist_id );
+        $statement->bindParam('shoppinglist_name' ,$shoppinglist_name );
+        $statement->executeQuery();
+
+
+        return $this->findOneBy(['shoppinglistId' => $shoppinglist_id]) ;
 
     }
 

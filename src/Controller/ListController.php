@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Shoppinglist;
 use App\Repository\ShoppinglistProductRepository;
 use App\Repository\ShoppinglistRepository;
 use Doctrine\DBAL\Exception;
@@ -20,7 +21,7 @@ class ListController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function updateList(ShoppinglistProductRepository $shoppinglistProductRepository){
+    public function updateList(ShoppinglistProductRepository $shoppinglistProductRepository , ShoppinglistRepository $shoppinglistRepository){
             //update checked of qty
 
         $contents = json_decode(file_get_contents("php://input"));
@@ -57,7 +58,14 @@ class ListController extends AbstractController
 
         }
 
+        if(property_exists($contents , "shoppinglist_name")) {
 
+            $list = $shoppinglistRepository->updateListName($contents->shoppinglist_id, $contents->shoppinglist_name);
+        }
+
+       return $this->json([['shoppinglist_id'=>$list->getShoppinglistId() ,
+           'shoppinglist_create_date'=>$list->getShoppinglistCreateDateString() ,
+           'shoppinglist_name'=>$list->getShoppinglistName()]]);
     }
 
 
@@ -166,9 +174,7 @@ class ListController extends AbstractController
         $lists_array = [];
         $lists = $shoppinglistRepository->allListsByDate();
 
-        if ( !$lists){
-            throw $this->createNotFoundException("No Lists Found");
-        }
+
         foreach ( $lists as $list){
             $lists_array[] = [
 
@@ -197,7 +203,19 @@ class ListController extends AbstractController
     }
 
 
+    /**
+     * @Route("/api/lists/{shoppinglistid}" , name="app_lists_nostore")
+     * @return JsonResponse
+     */
+    public function giveAllSoresLists($shoppinglistid  , ShoppinglistRepository $shoppinglistRepository){
 
+        //Toon de juiste lijst onafhankelijk van winkel
+
+        $lists = $shoppinglistRepository->giveListforAllStores($shoppinglistid );
+        return $this->json($lists);
+
+
+    }
 
 
 }
