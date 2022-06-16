@@ -65,7 +65,8 @@ class ListController extends AbstractController
 
        return $this->json([['shoppinglist_id'=>$list->getShoppinglistId() ,
            'shoppinglist_create_date'=>$list->getShoppinglistCreateDateString() ,
-           'shoppinglist_name'=>$list->getShoppinglistName()]]);
+           'shoppinglist_name'=>$list->getShoppinglistName(),
+       'user_id'=>$list->getUserId()]]);
     }
 
 
@@ -94,7 +95,8 @@ class ListController extends AbstractController
             foreach ($lists as $list) {
                 $lists_array[] = ['shoppinglist_id' => $list->getShoppinglistId(),
                     'shoppinglist_create_date' => $list->getShoppinglistCreateDateString(),
-                    'shoppinglist_name' => $list->getShoppinglistName()];
+                    'shoppinglist_name' => $list->getShoppinglistName(),
+                    'user_id' =>$list->getUserId()];
             }
 
             return $this->json($lists_array);
@@ -136,11 +138,13 @@ class ListController extends AbstractController
             if (property_exists($contents , "shoppinglist_name"))
             {
                 $newListName = $contents->shoppinglist_name;
-                $newList = $shoppinglistRepository->setList($newListName);
+                $userid = $contents->user_id;
+                $newList = $shoppinglistRepository->setList($newListName,$userid );
 
                 return $this->json(['shoppinglist_id' => $newList->getShoppinglistId() ,
                                     'shoppinglist_create_date'=> $newList->getShoppinglistCreateDateString() ,
-                                    'shoppinglist_name' => $newList->getShoppinglistName() ]);
+                                    'shoppinglist_name' => $newList->getShoppinglistName(),
+                                    'user_id' =>$newList->getUserId()]);
             }
 
             if(property_exists($contents , "shoppinglist_id") && property_exists($contents , "product_id"))
@@ -165,14 +169,14 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/api/lists" , name="app_alllists")
+     * @Route("/api/lists/{id}" , name="app_alllists")
      * @return JsonResponse
      */
-    public function giveAllLists( ShoppinglistRepository $shoppinglistRepository){
+    public function giveAllLists( $id = null ,ShoppinglistRepository $shoppinglistRepository){
 
         // Toon alle lijsten in json
         $lists_array = [];
-        $lists = $shoppinglistRepository->allListsByDate();
+        $lists = $shoppinglistRepository->allListsByDate($id);
 
 
 
@@ -182,8 +186,9 @@ class ListController extends AbstractController
                 'shoppinglist_id'=>$list->getShoppinglistId() ,
                 'shoppinglist_create_date'=>$list->getShoppinglistCreateDateString() ,
                 'shoppinglist_name'=>$list->getShoppinglistName(),
-            'user_id'=>$list->getUserId()];
+                'user_id'=>$list->getUserId()];
         }
+
 
         return $this->json($lists_array);
 
@@ -206,14 +211,16 @@ class ListController extends AbstractController
 
 
     /**
-     * @Route("/api/lists/{shoppinglistid}" , name="app_lists_nostore")
+     * @Route("/api/list/{shoppinglistid}" , name="app_lists_nostore")
      * @return JsonResponse
      */
-    public function giveAllSoresLists($shoppinglistid  , ShoppinglistRepository $shoppinglistRepository){
+    public function giveAllStoresLists($shoppinglistid  , ShoppinglistRepository $shoppinglistRepository){
 
         //Toon de juiste lijst onafhankelijk van winkel
 
         $lists = $shoppinglistRepository->giveListforAllStores($shoppinglistid );
+
+
         return $this->json($lists);
 
 

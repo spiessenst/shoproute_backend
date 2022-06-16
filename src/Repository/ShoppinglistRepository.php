@@ -77,9 +77,11 @@ order by r.sort_order;";
    /**
     * @return Shoppinglist[] Returns an array of Shoppinglist objects
      */
-   public function  allListsByDate(): array
+   public function  allListsByDate($value): array
    {
        return $this->createQueryBuilder('s')
+           ->Where('s.user_id = :val')
+            ->setParameter('val', $value)
             ->orderBy('s.shoppinglistCreateDate', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
@@ -90,12 +92,13 @@ order by r.sort_order;";
     /**
      * @throws Exception
      */
-    public function setList($listname){
+    public function setList($listname , $userid){
 
-        $sql = "INSERT INTO shoppinglist SET shoppinglist_name= :shoppinglist_name";
+        $sql = "INSERT INTO shoppinglist ( shoppinglist_name , user_id ) VALUES  (:shoppinglist_name , :user_id)";
 
         $statement = $this->getEntityManager()->getConnection()->prepare($sql);
         $statement->bindParam('shoppinglist_name' ,$listname );
+        $statement->bindParam('user_id' ,$userid );
         $statement->executeQuery();
 
         $latestId = $this->getEntityManager()->getConnection()->lastInsertId();
