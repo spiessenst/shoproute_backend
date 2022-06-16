@@ -38,7 +38,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     {
         //dd("authenticate in LoginAuthenticator");
         $email = $request->request->get('username', '');
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
@@ -56,7 +55,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        return new RedirectResponse($this->urlGenerator->generate('app_admin_home'));
         //return new Response("Authenticator heeft u goed geauthenticeerd");
 
 

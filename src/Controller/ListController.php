@@ -175,12 +175,14 @@ class ListController extends AbstractController
         $lists = $shoppinglistRepository->allListsByDate();
 
 
+
         foreach ( $lists as $list){
             $lists_array[] = [
 
                 'shoppinglist_id'=>$list->getShoppinglistId() ,
                 'shoppinglist_create_date'=>$list->getShoppinglistCreateDateString() ,
-                'shoppinglist_name'=>$list->getShoppinglistName()];
+                'shoppinglist_name'=>$list->getShoppinglistName(),
+            'user_id'=>$list->getUserId()];
         }
 
         return $this->json($lists_array);

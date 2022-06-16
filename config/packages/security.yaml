@@ -22,7 +22,12 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: app_home
+                target: app_admin_home
+
+            json_login:
+                check_path: app_json_login
+                username_path: username
+                password_path: password
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -35,9 +40,11 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/app_json_login, role: PUBLIC_ACCESS }
         - { path: ^/api, role: PUBLIC_ACCESS }
         - { path: ^/login, role: PUBLIC_ACCESS }
-        - { path: '/', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '/', roles: [IS_AUTHENTICATED_FULLY] }
 
 when@test:
     security:

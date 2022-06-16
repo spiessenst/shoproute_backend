@@ -2,13 +2,22 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
-//Belangrijk voor CORS error !!!
-header('Access-Control-Allow-Credentials: true');
 
-header("Access-Control-Allow-Origin: *");
+if (!isset($_SESSION)) session_start(["cookie_samesite"=>"None" ,  "cookie_secure"=>true ]);
+
+//Belangrijk voor CORS error !!!
+header("Access-Control-Allow-Origin: http://localhost:3000");
+//header("Access-Control-Allow-Origin: https://thomas-shop.surge.sh");
+header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH , DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS"){
+    header("HTTP/1.1 200 OK");
+    exit();
+}
+
 
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;

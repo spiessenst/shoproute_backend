@@ -35,6 +35,14 @@ class Shoppinglist
      */
     private $shoppinglistName;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $user_id;
+
+
+
+
     public function getShoppinglistId(): ?int
     {
         return $this->shoppinglistId;
@@ -76,6 +84,18 @@ class Shoppinglist
     public function setShoppinglistName(?string $shoppinglistName): self
     {
         $this->shoppinglistName = $shoppinglistName;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }
