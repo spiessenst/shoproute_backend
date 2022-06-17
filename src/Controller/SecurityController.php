@@ -8,7 +8,7 @@ use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/api/app_json_login", name="app_json_login", methods={"POST"})
+     * @Route("/app_json_login", name="app_json_login", methods={"POST"})
      */
     public function login()
     {

@@ -6,8 +6,8 @@ ini_set( 'display_errors', 1 );
 if (!isset($_SESSION)) session_start(["cookie_samesite"=>"None" ,  "cookie_secure"=>true ]);
 
 //Belangrijk voor CORS error !!!
-//header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Origin: https://shoproute.surge.sh");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+//header("Access-Control-Allow-Origin: https://shoproute.surge.sh");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH , DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");

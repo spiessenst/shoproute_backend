@@ -204,6 +204,7 @@ class ListController extends AbstractController
 
         //Toon de juiste lijst voor de juiste winkel
 
+
         $lists = $shoppinglistRepository->giveListForStore($shoppinglistid , $storeid);
         return $this->json($lists);
 
