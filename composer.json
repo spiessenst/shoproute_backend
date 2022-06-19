@@ -72,7 +72,8 @@
             "allow-contrib": false,
             "require": "5.4.*",
             "docker": false
-        }
+        },
+        "public-dir": ".."
     },
     "require-dev": {
         "symfony/debug-bundle": "5.4.*",
