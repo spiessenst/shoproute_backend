@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTAuthenticatedEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class JWTSubscriber implements EventSubscriberInterface
 {
@@ -37,6 +38,7 @@ class JWTSubscriber implements EventSubscriberInterface
     {
         if($this->payload && $this->user)
         {
+
             $expireTime = $this->payload['exp'] - time();
             if($expireTime < static::REFRESH_TIME)
             {
@@ -53,6 +55,7 @@ class JWTSubscriber implements EventSubscriberInterface
 
     public function onAuthenticatedAccess(JWTAuthenticatedEvent $event)
     {
+
         $this->payload = $event->getPayload();
         $this->user = $event->getToken()->getUser();
     }
@@ -78,12 +81,12 @@ class JWTSubscriber implements EventSubscriberInterface
                 $name = "BEARER",
                 $value = $jwt,
                 $expire = new \DateTime("+1 day"),
-                $path = "/",
+                $path = "",
                 $domain = null,
-                $secure = false,
+                $secure = true,
                 $httpOnly = true,
                 $raw = false,
-                $sameSite = 'strict'    //kan ook 'lax' zijn, dat is de default waarde
+                $sameSite = 'none'    //kan ook 'lax' zijn, dat is de default waarde
             )
         );
     }
