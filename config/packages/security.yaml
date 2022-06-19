@@ -10,11 +10,28 @@ security:
             entity:
                 class: App\Entity\Admin
                 property: username
-        # used to reload user from session & other features (e.g. switch_user)
+
     firewalls:
+
+        login :
+            pattern: ^/api/login_check
+            stateless: true
+            json_login:
+                check_path: /api/login_check # or api_login_check as defined in config/routes.yaml
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api :
+            pattern : ^/api
+            stateless : true
+            guard :
+                authenticators :
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
             provider: app_user_provider
@@ -24,27 +41,29 @@ security:
                 # where to redirect after logout
                 target: app_admin_home
 
-            json_login:
-                check_path: app_json_login
-                username_path: username
-                password_path: password
-
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+            json_login :
+                check_path : app_json_login
+                username_path : username
+                password_path : password
+
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/api/app_json_login, role: PUBLIC_ACCESS }
-        - { path: ^/api, role: PUBLIC_ACCESS }
-        - { path: ^/login, role: PUBLIC_ACCESS }
-        - { path: '/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
-        - { path: '/', roles: [IS_AUTHENTICATED_FULLY] }
+        - { path : '/login', roles : [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path : '^/app_json_login', roles : IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path : '^/api/login_check', roles : IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path : '^/api', roles : IS_AUTHENTICATED_FULLY }
+        - { path : '/', roles : [ IS_AUTHENTICATED_FULLY, ROLE_ADMIN ] }
+
 
 when@test:
     security:
