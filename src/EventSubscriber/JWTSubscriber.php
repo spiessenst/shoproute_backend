@@ -12,6 +12,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 class JWTSubscriber implements EventSubscriberInterface
 {
 
@@ -58,19 +59,34 @@ class JWTSubscriber implements EventSubscriberInterface
 
         $this->payload = $event->getPayload();
         $this->user = $event->getToken()->getUser();
+
+
     }
 
+    /**
+     * @param AuthenticationSuccessEvent $event
+     */
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event)
     {
+
+
         $eventData = $event->getData();
+        $eventUser = $event->getUser();
+
+        $eventData['id'] = $eventUser->getId();
+
+        $event->setData($eventData);
+
         if(isset($eventData['token']))
-        {
-            $response = $event->getResponse();
-            $jwt = $eventData['token'];
+       {
+           $response = $event->getResponse();
+           $jwt = $eventData['token'];
 
             // Set cookie
-            $this->createCookie($response, $jwt);
-        }
+           $this->createCookie($response, $jwt);
+       }
+
+
     }
 
 
